@@ -5,6 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 import ContactForm from "./components/ContactForm";
+import AboutBio from "./components/AboutBio";
+
+const fullBio = `I’m Harry AKA Waiting for Smith. I named myself Waiting for Smith after waiting for my first drummer, Smith, who never showed up for rehearsals. I like lightness & poetry and I feel my music has both.  Here’s my life in a paragraph: I travelled across Cuba for 2 months on a motorbike, and learned to play the maraca. Moved to Paris, learned French and became a ski instructor. Learned Russian, broke my back, died for 5 minutes and came back to life. Realised I wanted to do music, struggled with mental health and thoughts of not wanting to be here. Moved to Amsterdam, learned Dutch and healed those struggles. Took a break in South Africa for 4 months in pursuit of happiness & healing, returned full of joy.
+I realizing I wanted to make music for people like YOU to feel more joyous, free, light and loved.
+`; // <- put your full long bio here
 
 const shows = [
   {
@@ -92,7 +97,7 @@ export default function EPKPage() {
       </section>
 
       {/* ===== ABOUT ===== */}
-      <section id="about" className="py-24 px-4 bg-[#F9F8E9]">
+      {/* <section id="about" className="py-24 px-4 bg-[#F9F8E9]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-12">
           <div>
             <div className="relative inline-block">
@@ -127,6 +132,17 @@ export default function EPKPage() {
               className="object-cover"
             />
           </div>
+        </div>
+      </section> */}
+
+      <section id="about" className="py-20">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center px-4">
+          <AboutBio bio={fullBio} collapsedLines={8} />
+          <img
+            src="/assets/porttongue.jpg"
+            alt="Waiting for Smith portrait"
+            className="rounded-3xl w-full h-full object-cover shadow-lg"
+          />
         </div>
       </section>
 
