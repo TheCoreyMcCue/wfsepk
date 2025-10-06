@@ -4,6 +4,35 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import ContactForm from "./components/ContactForm";
+
+const shows = [
+  {
+    date: "2025-11-13",
+    city: "Amsterdam",
+    venue: "Melkweg UP",
+    ticketUrl: "#",
+  },
+  { date: "2025-11-18", city: "Berlin", venue: "Lark", ticketUrl: "#" },
+  { date: "2025-11-19", city: "Cologne", venue: "Helios 37", ticketUrl: "#" },
+  {
+    date: "2025-11-20",
+    city: "Hamburg",
+    venue: "Nochtspeicher",
+    ticketUrl: "#",
+  },
+  { date: "2025-11-22", city: "Cologne", venue: "Helios 37", ticketUrl: "#" },
+  {
+    date: "2025-11-25",
+    city: "Hamburg",
+    venue: "Nochtspeicher",
+    ticketUrl: "#",
+  },
+];
+
+const fmt = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", { month: "short", day: "2-digit" });
+
 export default function EPKPage() {
   return (
     <main className="min-h-screen bg-[#F9F8E9] text-[#1E1E1E] font-sans overflow-x-hidden">
@@ -102,27 +131,81 @@ export default function EPKPage() {
       </section>
 
       {/* ===== TOUR ===== */}
-      <section id="tour" className="py-24 bg-white text-center">
-        <h3 className="text-3xl font-black uppercase mb-12 text-[#1E1E1E]">
+      <section id="tour" className="py-24 relative overflow-hidden">
+        {/* background texture (optional) */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#EAF7FB] to-transparent" />
+          <img
+            src="/assets/watermelon.avif"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-10 mix-blend-multiply pointer-events-none"
+          />
+        </div>
+
+        <h3 className="text-center text-3xl md:text-4xl font-black uppercase tracking-wide mb-12">
           The Joy of Living Tour
         </h3>
-        <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6">
-          {[
-            { date: "Nov 13", city: "Amsterdam", venue: "Melkweg UP" },
-            { date: "Nov 18", city: "Berlin", venue: "Lark" },
-            { date: "Nov 19", city: "Cologne", venue: "Helios 37" },
-            { date: "Nov 20", city: "Hamburg", venue: "Nochtspeicher" },
-            { date: "Nov 22", city: "Cologne", venue: "Helios 37" },
-            { date: "Nov 25", city: "Hamburg", venue: "Nochtspeicher" },
-          ].map((show) => (
-            <div
-              key={show.date + show.city}
-              className="bg-gradient-to-b from-[#C3E8F6] to-[#88D5E7] rounded-lg shadow-md p-4 border border-[#F9E158]"
+
+        <div className="max-w-6xl mx-auto grid gap-6 px-4 sm:grid-cols-2 lg:grid-cols-3">
+          {shows.map((s) => (
+            <article
+              key={s.date + s.city}
+              className="group relative rounded-2xl border border-[#F9E158]/70 bg-white/85 backdrop-blur
+                   shadow-[0_8px_20px_rgba(0,0,0,.08)] overflow-hidden transition
+                   hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(0,0,0,.12)]"
             >
-              <p className="text-3xl font-black text-[#F9E158]">{show.date}</p>
-              <p className="font-semibold uppercase">{show.city}</p>
-              <p className="text-sm">{show.venue}</p>
-            </div>
+              {/* top gradient line */}
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#F9E158] via-[#E17742] to-[#B16B95] opacity-80" />
+
+              <div className="p-5 flex items-center gap-4">
+                {/* Date badge */}
+                <div className="shrink-0">
+                  <div
+                    className="rounded-xl bg-gradient-to-b from-[#C3E8F6] to-[#88D5E7] 
+                            ring-1 ring-[#F9E158] px-3 py-2 text-center"
+                  >
+                    <div className="text-[#F9E158] font-black text-xl leading-none">
+                      {fmt(s.date)}
+                    </div>
+                  </div>
+                </div>
+
+                {/* City / Venue */}
+                <div className="min-w-0">
+                  <h4 className="font-black uppercase tracking-wide text-lg truncate">
+                    {s.city}
+                  </h4>
+                  <p className="text-sm text-gray-700 truncate">{s.venue}</p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="px-5 pb-5 flex items-center gap-3">
+                <a
+                  href={s.ticketUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-[#F9E158]
+                       px-4 py-2 font-semibold text-[#1E1E1E] transition
+                       hover:bg-[#E17742] hover:text-white"
+                >
+                  Tickets
+                </a>
+
+                {/* Optional: calendar stub – wire up later if desired */}
+                <button
+                  type="button"
+                  aria-label="Add to calendar"
+                  className="rounded-full border border-[#E17742]/30 px-4 py-2 text-sm
+                       hover:bg-[#FFF2EC] transition"
+                >
+                  Add to Calendar
+                </button>
+              </div>
+
+              {/* subtle glow on hover */}
+              <div className="pointer-events-none absolute inset-0 ring-2 ring-transparent rounded-2xl group-hover:ring-[#F9E158]/40 transition" />
+            </article>
           ))}
         </div>
       </section>
@@ -230,56 +313,23 @@ export default function EPKPage() {
         <h3 className="text-3xl font-black uppercase mb-6">
           Bookings & Contact
         </h3>
-        <p className="mb-8 max-w-2xl mx-auto">
-          For booking inquiries, press requests, or management contact, please
-          fill in the details below.
+        <p className="mb-10 max-w-2xl mx-auto">
+          For booking inquiries, press requests, or management contact, use the
+          form below.
         </p>
-        <div className="inline-block bg-white rounded-xl border border-gray-300 p-6 shadow-md text-left">
+
+        {/* Card with existing contacts (optional) */}
+        <div className="inline-block bg-white rounded-xl border border-gray-200 p-6 shadow-sm mb-10 text-left">
           <p>
-            <strong>Bookings:</strong> [Name / Email / Phone]
+            <strong>Management:</strong> James Ellett —{" "}
+            <a className="underline" href="mailto:james@outsett.com">
+              james@outsett.com
+            </a>
           </p>
-          <p>
-            <strong>Press:</strong> [Name / Email / Phone]
-          </p>
-          <p>
-            <strong>Management:</strong> [Name / Email / Phone]
-          </p>
+          {/* Add Bookings/Press rows as you confirm them */}
         </div>
 
-        <div className="flex justify-center gap-6 mt-10 text-sm font-medium">
-          <a
-            href="https://open.spotify.com/artist/57oieIojgviKMyTtzG4kn2"
-            target="_blank"
-            rel="noopener"
-            className="hover:underline"
-          >
-            Spotify
-          </a>
-          <a
-            href="https://www.instagram.com/waitingforsmith/"
-            target="_blank"
-            rel="noopener"
-            className="hover:underline"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.tiktok.com/@waitingforsmith"
-            target="_blank"
-            rel="noopener"
-            className="hover:underline"
-          >
-            TikTok
-          </a>
-          <a
-            href="https://www.waitingforsmith.co.uk/"
-            target="_blank"
-            rel="noopener"
-            className="hover:underline"
-          >
-            Website
-          </a>
-        </div>
+        <ContactForm />
       </section>
 
       {/* ===== FOOTER ===== */}
