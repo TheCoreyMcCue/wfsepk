@@ -12,11 +12,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Waiting for Smith — I Like Life EP | Official EPK",
+  title: "Waiting for Smith — Official EPK",
   description:
     "The official Electronic Press Kit for Waiting for Smith. Discover the joy-filled indie pop of the I Like Life EP — tour dates, bio, press, and contact info.",
   openGraph: {
-    title: "Waiting for Smith — I Like Life EP | Official EPK",
+    title: "Waiting for Smith — Official EPK",
     description:
       "The official EPK for Waiting for Smith, featuring uplifting indie pop tracks, tour info, photos, and contact details.",
     url: "https://www.waitingforsmith.co.uk/epk",
