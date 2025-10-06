@@ -14,29 +14,35 @@ export default function ContactFormServer() {
     setError("");
 
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries()) as Record<
+      string,
+      FormDataEntryValue
+    >;
 
     try {
-      const res = await fetch("../api/contact/", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          subject: data.subject,
-          message: data.message,
+          name: String(data.name ?? ""),
+          email: String(data.email ?? ""),
+          subject: String((data.subject ?? "") as string),
+          message: String(data.message ?? ""),
         }),
       });
 
-      const body = await res.json();
+      const body: { ok?: boolean; error?: string } = await res.json();
+
       if (!res.ok || !body.ok) {
         throw new Error(body.error || "Failed to send message");
       }
 
       setStatus("sent");
       form.reset();
-    } catch (err: any) {
-      setError(err.message || "Something went wrong");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Something went wrong";
+      setError(msg);
       setStatus("error");
     }
   }
